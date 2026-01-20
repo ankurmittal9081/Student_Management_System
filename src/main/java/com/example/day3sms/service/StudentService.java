@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
-    private  StudentRepositiory repositiory;
+    private final StudentRepositiory repositiory;
 
     //create
 
