@@ -1,9 +1,10 @@
 package com.example.day3sms.service;
 
+import com.example.day3sms.dto.StudentRequestDto;
+import com.example.day3sms.dto.StudentResponseDto;
 import com.example.day3sms.model.StudentModel;
 import com.example.day3sms.repository.StudentRepositiory;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class StudentService {
@@ -13,31 +14,20 @@ public class StudentService {
     public StudentService(StudentRepositiory repository) {
         this.repository = repository;
     }
+    public StudentResponseDto addStudent(StudentRequestDto dto){
 
-    // create
-    public StudentModel addStudent(StudentModel student){
-        return repository.save(student);
-    }
+        StudentModel student = new StudentModel();
+        student.setName(dto.getName());
+        student.setAge(dto.getAge());
+        student.setEmail(dto.getEmail());
 
-    // display
-    public List<StudentModel> getStudents(){
-        return repository.findAll();
-    }
+        StudentModel saved = repository.save(student);
 
-    // delete
-    public void deleteStudent(String id){
-        repository.deleteById(id);
-    }
-
-    // update
-    public StudentModel updateStudent(String id, StudentModel student){
-        StudentModel existingStudent = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No Student found"));
-
-        existingStudent.setName(student.getName());
-        existingStudent.setAge(student.getAge());
-        existingStudent.setEmail(student.getEmail());
-
-        return repository.save(existingStudent);
+        return new StudentResponseDto(
+                saved.getId(),
+                saved.getName(),
+                saved.getAge(),
+                saved.getEmail()
+        );
     }
 }
