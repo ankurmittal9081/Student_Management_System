@@ -6,6 +6,8 @@ import com.example.day3sms.model.StudentModel;
 import com.example.day3sms.repository.StudentRepositiory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentService {
 
@@ -14,6 +16,8 @@ public class StudentService {
     public StudentService(StudentRepositiory repository) {
         this.repository = repository;
     }
+
+    //create
     public StudentResponseDto addStudent(StudentRequestDto dto){
 
         StudentModel student = new StudentModel();
@@ -30,4 +34,24 @@ public class StudentService {
                 saved.getEmail()
         );
     }
+
+    //Read
+    public List<StudentResponseDto> getAllStudents() {
+        return repository.findAll()
+                .stream()
+                .map(s -> new StudentResponseDto(
+                        s.getId(),
+                        s.getName(),
+                        s.getAge(),
+                        s.getEmail()
+                ))
+                .toList();
+    }
+
+    //Delete
+    public void deleteStudent(String id) {
+        repository.deleteById(id);
+    }
+
+
 }
