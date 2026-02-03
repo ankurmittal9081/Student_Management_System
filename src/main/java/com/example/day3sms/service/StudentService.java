@@ -48,10 +48,34 @@ public class StudentService {
                 .toList();
     }
 
+
+    //Update
+    public StudentResponseDto updateStudent(String id, StudentRequestDto dto) {
+
+        StudentModel existingStudent = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        existingStudent.setName(dto.getName());
+        existingStudent.setAge(dto.getAge());
+        existingStudent.setEmail(dto.getEmail());
+
+        StudentModel updated = repository.save(existingStudent);
+
+        return new StudentResponseDto(
+                updated.getId(),
+                updated.getName(),
+                updated.getAge(),
+                updated.getEmail()
+        );
+    }
+
+
     //Delete
     public void deleteStudent(String id) {
         repository.deleteById(id);
     }
+
+
 
 
 }

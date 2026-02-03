@@ -34,10 +34,13 @@ public class StudentController {
         service.deleteStudent(id);
         return "Student Deleted Successfully";
     }
-//
-//    @PutMapping("/update/{id}")
-//    public StudentModel updateStudent(@PathVariable String id,
-//                                      @RequestBody StudentModel student){
-//        return service.updateStudent(id, student);
-//    }
+
+    @PutMapping("/update/{id}")
+    public StudentResponseDto updateStudent(
+        @PathVariable String id,
+        @Valid @RequestBody StudentRequestDto student) {
+
+    return service.updateStudent(id, student);
+    }
+
 }
