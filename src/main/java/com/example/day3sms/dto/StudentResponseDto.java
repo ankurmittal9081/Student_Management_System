@@ -5,8 +5,4 @@ public record StudentResponseDto(
         String name,
         int email,
         String age
-)
-
-{
-
-}
+){}
